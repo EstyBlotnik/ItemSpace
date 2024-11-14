@@ -4,7 +4,12 @@ import { ICar } from '../types/car';
 import Car from './Car';
 import { addCar } from '../servesies/carsActions';
 
-const Cars = ({ cars }: { cars: ICar[] }) => {
+interface CarsProps {
+    cars: ICar[];
+    fetchData: () => void;
+}
+
+const Cars = ({ cars, fetchData }: CarsProps) => {
     const [isAdding, setIsAdding] = useState(false);
     const [licensePlate, setLicensePlate] = useState('');
     const [chassisNumber, setChassisNumber] = useState('');
@@ -22,13 +27,13 @@ const Cars = ({ cars }: { cars: ICar[] }) => {
         setCarModel('');
         setMileage(0);
         addCar(licensePlate, chassisNumber, brand, carModel, mileage);
-
+        fetchData();
     }
     return (
         <div>
             {cars.map((item, index) => (
                 <li key={index} className="border-b border-gray-300 py-4">
-                    <Car car={item} />
+                    <Car car={item} fetchData={fetchData} />
                 </li>
             ))}
             <button

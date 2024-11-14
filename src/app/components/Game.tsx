@@ -3,7 +3,11 @@ import React, { useState } from 'react'
 import { IGame } from '../types/game'
 import { deleteGame, editGame } from '../servesies/gamesActions';
 
-const Game = ({ game }: { game: IGame }) => {
+interface GameProps {
+    game: IGame;
+    fetchData: () => void;
+}
+const Game = ({ game, fetchData }: GameProps) => {    
     const [localGame, setLocalGame] = useState<IGame>(game as IGame);
     const [isEdititng, setIsEdititng] = useState(false);
     const [gamename, setGamename] = useState(localGame.gamename);
@@ -23,10 +27,11 @@ const Game = ({ game }: { game: IGame }) => {
         });
         console.log(answer);
         setLocalGame(answer.game);
+        fetchData();
     }
     const delete_game = (id: string) => {
         deleteGame(id);
-
+        fetchData();
     }
     return (
         <div className="p-4 border rounded-lg shadow-sm bg-white">

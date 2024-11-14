@@ -3,7 +3,11 @@ import React, { useState } from 'react'
 import { IBook } from '../types/book'
 import { editBook, deleteBook } from '../servesies/bookActions'
 
-const Book = ({ book }: { book: IBook }) => {
+interface BookProps {
+    book: IBook;
+    fetchData: () => void;
+}
+const Book = ({ book, fetchData }: BookProps) => {
     const [bookName, setBookName] = useState(book.bookName);
     const [authorName, setAuthorName] = useState(book.authorName);
     const [publicationYear, setPublicationYear] = useState<number>(book.publicationYear);
@@ -17,6 +21,7 @@ const Book = ({ book }: { book: IBook }) => {
             bookName, authorName, publicationYear, category, price, _id: book._id ?? "0"
         });
         setLocalBook(answer.book);
+        fetchData();
     }
     return (
         <div>
@@ -36,7 +41,10 @@ const Book = ({ book }: { book: IBook }) => {
 
                 {book && book._id ? (
                     <button
-                        onClick={() => deleteBook(String(book._id))}
+                        onClick={() => {
+                            deleteBook(String(book._id));
+                            fetchData();
+                        }}
                         className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200"
                     >
                         Delete

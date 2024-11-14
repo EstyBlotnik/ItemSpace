@@ -2,8 +2,11 @@
 import React, { useState } from 'react'
 import { ICar } from '../types/car'
 import { deleteCar, editCar } from '../servesies/carsActions';
-
-const Car = ({ car }: { car: ICar }) => {
+interface CarProps {
+    car: ICar;
+    fetchData: () => void;
+}
+const Car = ({ car, fetchData }: CarProps) => {
     const [localCar, setLocalCar] = useState<ICar>(car as ICar);
     const [isEdititng, setIsEdititng] = useState(false);
     const [licensePlate, setLicensePlate] = useState(localCar.licensePlate);
@@ -23,10 +26,11 @@ const Car = ({ car }: { car: ICar }) => {
         });
         console.log(answer);
         setLocalCar(answer.car);
+        fetchData();
     }
-    const delete_car=(id:string)=>{
+    const delete_car = (id: string) => {
         deleteCar(id);
-        
+        fetchData();
     }
     return (
         <div className="p-4 border rounded-lg shadow-sm bg-white">

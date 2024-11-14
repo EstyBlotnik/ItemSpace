@@ -3,8 +3,11 @@ import React, { useState } from 'react'
 import { IGame } from '../types/game';
 import Game from './Game';
 import { addGame } from '../servesies/gamesActions';
-
-const Games = ({ games }: { games: IGame[] }) => {
+interface GamesProps {
+    games: IGame[];
+    fetchData: () => void;
+}
+const Games = ({ games, fetchData }: GamesProps) => {
     const [isAdding, setIsAdding] = useState(false);
     const [gamename, setGamename] = useState('');
     const [description, setDescription] = useState('');
@@ -22,12 +25,13 @@ const Games = ({ games }: { games: IGame[] }) => {
         setMaxPlayers(1000);
         setMinPlayers(0);
         addGame(gamename, description, minPlayers, maxPlayers, company);
+        fetchData();
     }
     return (
         <div>
             {games.map((item, index) => (
                 <li key={index} className="border-b border-gray-300 py-4">
-                    <Game game={item} />
+                    <Game game={item} fetchData={fetchData} />
                 </li>
             ))}
             <button

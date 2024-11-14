@@ -59,7 +59,7 @@ const HomePage: React.FC = () => {
       {activeTab === 'books' && (
         <div className="w-full bg-white rounded-lg shadow-lg p-4">
           <h2 className="text-2xl font-semibold mb-4">Books:</h2>
-          <Books books={books} />
+          <Books books={books} fetchData={fetchData} />
         </div>
       )}
 
@@ -68,7 +68,7 @@ const HomePage: React.FC = () => {
         <div className="w-full bg-white rounded-lg shadow-lg p-4">
           <h2 className="text-2xl font-semibold mb-4">Cars:</h2>
           <ul>
-            <Cars cars={cars} />
+            <Cars cars={cars} fetchData={fetchData} />
           </ul>
         </div>
       )}
@@ -77,7 +77,7 @@ const HomePage: React.FC = () => {
         <div className="w-full bg-white rounded-lg shadow-lg p-4">
           <h2 className="text-2xl font-semibold mb-4">Games:</h2>
           <ul>
-            <Games games={games} />
+            <Games games={games} fetchData={fetchData} />
           </ul>
         </div>
       )}

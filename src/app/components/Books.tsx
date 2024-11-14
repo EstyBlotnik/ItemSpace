@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { IBook } from '../types/book';
 import Book from './Book';
 import { addBook } from '../servesies/bookActions';
-
-const Books = ({ books }: { books: IBook[] }) => {
+interface BooksProps {
+    books: IBook[];
+    fetchData: () => void;
+}
+const Books = ({ books, fetchData }: BooksProps) => {
     const [showDialog, setShowDialog] = useState(false);
     const [bookName, setBookName] = useState('');
     const [authorName, setAuthorName] = useState('');
@@ -14,6 +17,7 @@ const Books = ({ books }: { books: IBook[] }) => {
     const saveBook = () => {
         addBook(bookName, authorName, publicationYear, category, price);
         setShowDialog(false);
+        fetchData();
     };
 
     return (
@@ -25,7 +29,7 @@ const Books = ({ books }: { books: IBook[] }) => {
                         key={index}
                         className="bg-white border rounded-lg shadow-lg p-6 flex flex-col w-full max-w-xs mx-2 mb-6 transition-transform transform hover:scale-105"
                     >
-                        <Book book={book} />
+                        <Book book={book} fetchData={fetchData} />
                     </div>
                 ))}
             </div>
